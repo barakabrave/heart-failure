@@ -66,14 +66,11 @@ def main():
   # Encode categorical features
   encoded_data = encode_categorical(user_data)
 
-  # Call your machine learning model prediction function here (replace with your actual logic)
-  # This example assumes a function named 'predict' that takes encoded data as input
-  # and returns a prediction (e.g., probability of death event)
-  prediction = prediction(encoded_data)
+  predict = prediction(encoded_data)
 
   # Display prediction results
   if st.button("Predict"):
-    st.write(f"Predicted Probability of Death Event: {prediction:.2f}")  # Format prediction to 2 decimal places
+    st.write(f"Predicted Probability of Death Event: {predict:.2f}")  # Format prediction to 2 decimal places
 
 
 if __name__ == '__main__':
