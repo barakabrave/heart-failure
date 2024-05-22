@@ -1,92 +1,68 @@
 import streamlit as st
 
-# Define a dictionary to map categorical features to their possible values
-categorical_features = {
-    'anaemia': ['No', 'Yes'],
-    'diabetes': ['No', 'Yes'],
-    'high_blood_pressure': ['No', 'Yes'],
-    'sex': ['Male', 'Female'],
-    'smoking': ['No', 'Yes'],
-}
+# Define function to take user inputs
+def user_input():
+    age = st.slider('Age', 40, 100, 5)
+    anaemia = st.selectbox('Anaemia', ('No', 'Yes'))
+    creatinine_phosphokinase = st.number_input('Creatinine Phosphokinase', min_value=20, max_value=10000, value=200)
+    diabetes = st.selectbox('Diabetes', ('No', 'Yes'))
+    ejection_fraction = st.slider('Ejection Fraction', 10, 80, 10)
+    high_blood_pressure = st.selectbox('High Blood Pressure', ('No', 'Yes'))
+    platelets = st.number_input('Platelets', min_value=0, max_value=1000000, value=250000)
+    serum_creatinine = st.number_input('Serum Creatinine', min_value=0.0, max_value=10.0, value=1.0)
+    serum_sodium = st.slider('Serum Sodium', 100, 150, 135)
+    sex = st.selectbox('Sex', ('Female', 'Male'))
+    smoking = st.selectbox('Smoking', ('No', 'Yes'))
+    time = st.slider('Time', 0, 300, 150)
 
-# Define a function to perform one-hot encoding for categorical features
-def encode_categorical(data):
-  encoded_data = {}
-  for feature, options in categorical_features.items():
-    encoded_data[feature] = [0] * len(options)
-    encoded_data[feature][options.index(data[feature])] = 1
-  return encoded_data
+    # Encode categorical variables
+    anaemia = 1 if anaemia == 'Yes' else 0
+    diabetes = 1 if diabetes == 'Yes' else 0
+    high_blood_pressure = 1 if high_blood_pressure == 'Yes' else 0
+    sex = 1 if sex == 'Male' else 0
+    smoking = 1 if smoking == 'Yes' else 0
 
-# Create the Streamlit app
-st.title("Heart Disease Prediction")
+    # Create a dictionary with the user inputs
+    user_data = {
+        'age': age,
+        'anaemia': anaemia,
+        'creatinine_phosphokinase': creatinine_phosphokinase,
+        'diabetes': diabetes,
+        'ejection_fraction': ejection_fraction,
+        'high_blood_pressure': high_blood_pressure,
+        'platelets': platelets,
+        'serum_creatinine': serum_creatinine,
+        'serum_sodium': serum_sodium,
+        'sex': sex,
+        'smoking': smoking,
+        'time': time
+    }
+    
+    return user_data
 
-
-def prediction(age, creatinine_phosphokinase, ejection_fraction, platelets,
-                serum_creatinine, serum_sodium, anaemia, diabetes,
-                high_blood_pressure, sex, smoking, time):
-  """
-  This function takes individual features as input and performs prediction using your model.
-  Replace the placeholder logic with your actual prediction code using the provided features.
-  """
-  prediction = model.predict([[age, creatinine_phosphokinase, ejection_fraction, platelets,
-                               serum_creatinine, serum_sodium, anaemia, diabetes,
-                               high_blood_pressure, sex, smoking, time]])
-  print(prediction)
-  return prediction[0]  # Assuming the model returns a list or array, extract the first element (prediction)
-
-
+# Main function to run the app
 def main():
-  # Create input fields for numerical features
-  age = st.number_input("Age", min_value=0)
-  creatinine_phosphokinase = st.number_input("Creatinine Phosphokinase")
-  ejection_fraction = st.number_input("Ejection Fraction")
-  platelets = st.number_input("Platelets")
-  serum_creatinine = st.number_input("Serum Creatinine")
-  serum_sodium = st.number_input("Serum Sodium")
-  time = st.number_input("Time")
+    st.title("Machine Learning Model Interface")
+    
+    # Get user input
+    user_data = user_input()
 
-  # Create combo boxes for categorical features
-  anaemia_selected = st.selectbox("Anaemia", categorical_features['anaemia'])
-  diabetes_selected = st.selectbox("Diabetes", categorical_features['diabetes'])
-  high_blood_pressure_selected = st.selectbox("High Blood Pressure", categorical_features['high_blood_pressure'])
-  sex_selected = st.selectbox("Sex", categorical_features['sex'])
-  smoking_selected = st.selectbox("Smoking", categorical_features['smoking'])
+    # Convert user data to dataframe (if needed for your model)
+    import pandas as pd
+    input_df = pd.DataFrame([user_data])
+    pickle_in = open('model.pkl', 'rb')
+    model = pickle.load(pickle_in)
+    
+    # Display the user input
+    st.subheader('User Input')
+    st.write(input_df)
 
-  # Combine user inputs
-  user_data = {
-      'age': age,
-      'anaemia': anaemia_selected,
-      'creatinine_phosphokinase': creatinine_phosphokinase,
-      'diabetes': diabetes_selected,
-      'ejection_fraction': ejection_fraction,
-      'high_blood_pressure': high_blood_pressure_selected,
-      'platelets': platelets,
-      'serum_creatinine': serum_creatinine,
-      'serum_sodium': serum_sodium,
-      'sex': sex_selected,
-      'smoking': smoking_selected,
-      'time': time
-  }
-
-  # Encode categorical features
-  encoded_data = encode_categorical(user_data)
-  # Extract individual features from encoded data (assuming one-hot encoded)
-  anaemia = encoded_data['anaemia'][0]  # Assuming the first element is encoded value (replace with appropriate indexing if different)
-  diabetes = encoded_data['diabetes'][0]
-  high_blood_pressure = encoded_data['high_blood_pressure'][0]
-  sex = encoded_data['sex'][0]
-  smoking = encoded_data['smoking'][0]
- 
-
-  # Make prediction using the extracted features
-  prediction = prediction(age, creatinine_phosphokinase, ejection_fraction, platelets,
-                          serum_creatinine, serum_sodium, anaemia_selected, diabetes_selected,
-                          high_blood_pressure_selected, sex_selected, smoking_selected, time)
-
-  # Display prediction results
-  if st.button("Predict"):
-    st.write(f"Predicted Probability of Death Event: {prediction:.2f}")  # Format prediction to 2 decimal places
-
+    # Here you can add code to make predictions with your model
+    # For example:
+    # model = load_your_model()  # Load your trained model
+    prediction = model.predict(input_df)
+    st.subheader('Prediction')
+    st.write(prediction)
 
 if __name__ == '__main__':
-  main()
+    main()
