@@ -31,54 +31,53 @@ def prediction( age,anaemia, creatinine_phosphokinase,diabetes,ejection_fraction
     print(prediction)
     return prediction
 def main():
-   # Create input fields for numerical features
-    age = st.number_input("Age", min_value=0)
-    creatinine_phosphokinase = st.number_input("Creatinine Phosphokinase")
-    ejection_fraction = st.number_input("Ejection Fraction")
-    platelets = st.number_input("Platelets")
-    serum_creatinine = st.number_input("Serum Creatinine")
-    serum_sodium = st.number_input("Serum Sodium")
-    time = st.number_input("Time")
-    # Create combo boxes for categorical features
-    anaemia_selected = st.selectbox("Anaemia", categorical_features['anaemia'])
-    diabetes_selected = st.selectbox("Diabetes", categorical_features['diabetes'])
-    high_blood_pressure_selected = st.selectbox("High Blood Pressure", categorical_features['high_blood_pressure'])
-    sex_selected = st.selectbox("Sex", categorical_features['sex'])
-    smoking_selected = st.selectbox("Smoking", categorical_features['smoking'])
+  # Create input fields for numerical features
+  age = st.number_input("Age", min_value=0)
+  creatinine_phosphokinase = st.number_input("Creatinine Phosphokinase")
+  ejection_fraction = st.number_input("Ejection Fraction")
+  platelets = st.number_input("Platelets")
+  serum_creatinine = st.number_input("Serum Creatinine")
+  serum_sodium = st.number_input("Serum Sodium")
+  time = st.number_input("Time")
 
-    
-    
-    # Combine user inputs
-    user_data = {
-    'age': age,
-    'anaemia': anaemia_selected,
-    'creatinine_phosphokinase': creatinine_phosphokinase,
-    'diabetes': diabetes_selected,
-    'ejection_fraction': ejection_fraction,
-    'high_blood_pressure': high_blood_pressure_selected,
-    'platelets': platelets,
-    'serum_creatinine': serum_creatinine,
-    'serum_sodium': serum_sodium,
-    'sex': sex_selected,
-    'smoking': smoking_selected,
-    'time': time
-    }
-    
-    # Encode categorical features
-    encoded_data = encode_categorical(user_data)
-    
-    features=pd.DataFrame(user_data,index=[0])
-    result =""
-    
-    predict = prediction(encoded_data)
-    st.write(f"Predicted Probability of Death Event: {predict:.2f}")  # Format prediction to 2 decimal places
- 
-      
-     
-    
-if __name__=='__main__':
-    main()
+  # Create combo boxes for categorical features
+  anaemia_selected = st.selectbox("Anaemia", categorical_features['anaemia'])
+  diabetes_selected = st.selectbox("Diabetes", categorical_features['diabetes'])
+  high_blood_pressure_selected = st.selectbox("High Blood Pressure", categorical_features['high_blood_pressure'])
+  sex_selected = st.selectbox("Sex", categorical_features['sex'])
+  smoking_selected = st.selectbox("Smoking", categorical_features['smoking'])
 
+  # Combine user inputs
+  user_data = {
+      'age': age,
+      'anaemia': anaemia_selected,
+      'creatinine_phosphokinase': creatinine_phosphokinase,
+      'diabetes': diabetes_selected,
+      'ejection_fraction': ejection_fraction,
+      'high_blood_pressure': high_blood_pressure_selected,
+      'platelets': platelets,
+      'serum_creatinine': serum_creatinine,
+      'serum_sodium': serum_sodium,
+      'sex': sex_selected,
+      'smoking': smoking_selected,
+      'time': time
+  }
+
+  # Encode categorical features
+  encoded_data = encode_categorical(user_data)
+
+  # Call your machine learning model prediction function here (replace with your actual logic)
+  # This example assumes a function named 'predict' that takes encoded data as input
+  # and returns a prediction (e.g., probability of death event)
+  prediction = predict(encoded_data)
+
+  # Display prediction results
+  if st.button("Predict"):
+    st.write(f"Predicted Probability of Death Event: {prediction:.2f}")  # Format prediction to 2 decimal places
+
+
+if __name__ == '__main__':
+  main()
 
 # Call your machine learning model prediction function here (replace with your actual logic)
 # This example assumes a function named 'predict' that takes encoded data as input
