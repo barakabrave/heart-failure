@@ -66,7 +66,7 @@ def prediction( age,anaemia, creatinine_phosphokinase,diabetes,ejection_fraction
 # Call your machine learning model prediction function here (replace with your actual logic)
 # This example assumes a function named 'predict' that takes encoded data as input
 # and returns a prediction (e.g., probability of death event)
-prediction = model.predict(encoded_data)
+prediction = prediction(encoded_data)
 #prediction = round(model.predict(features)[0],0)
 
 # Display prediction results
