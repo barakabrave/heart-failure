@@ -70,12 +70,12 @@ def main():
 
   # Encode categorical features
   encoded_data = encode_categorical(user_data)
-    # Extract individual features from encoded data (assuming one-hot encoded)
+  # Extract individual features from encoded data (assuming one-hot encoded)
   anaemia = encoded_data['anaemia'][0]  # Assuming the first element is encoded value (replace with appropriate indexing if different)
-   diabetes = encoded_data['diabetes'][0]
-high_blood_pressure = encoded_data['high_blood_pressure'][0]
-sex = encoded_data['sex'][0]
-smoking = encoded_data['smoking'][0]
+  diabetes = encoded_data['diabetes'][0]
+  high_blood_pressure = encoded_data['high_blood_pressure'][0]
+  sex = encoded_data['sex'][0]
+  smoking = encoded_data['smoking'][0]
  
 
   # Make prediction using the extracted features
