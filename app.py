@@ -1,4 +1,5 @@
 import streamlit as st
+import pickle
 
 # Define function to take user inputs
 def user_input():
