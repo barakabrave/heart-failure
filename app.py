@@ -66,7 +66,7 @@ def main():
   # Encode categorical features
   encoded_data = encode_categorical(user_data)
 
-  predict = prediction(encoded_data)
+  predict = prediction(encoded_data)[0]
 
   # Display prediction results
   if st.button("Predict"):
