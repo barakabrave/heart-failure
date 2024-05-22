@@ -1,9 +1,4 @@
 import streamlit as st
-import pickle
-import pandas as pd
-st.set_page_config(layout="wide")
-pickle_in = open('heart_failure_model.pkl', 'rb')
-model = pickle.load(pickle_in)
 
 # Define a dictionary to map categorical features to their possible values
 categorical_features = {
@@ -26,10 +21,20 @@ def encode_categorical(data):
 st.title("Heart Disease Prediction")
 
 
-def prediction( age,anaemia, creatinine_phosphokinase,diabetes,ejection_fraction, high_blood_pressure, platelets,serum_creatinine,serum_sodium,sex,smoking,time):  
-    prediction=model.predict([[age,anaemia, creatinine_phosphokinase,diabetes,ejection_fraction, high_blood_pressure, platelets,serum_creatinine,serum_sodium,sex,smoking,time]])
-    print(prediction)
-    return prediction
+def prediction(age, creatinine_phosphokinase, ejection_fraction, platelets,
+                serum_creatinine, serum_sodium, anaemia, diabetes,
+                high_blood_pressure, sex, smoking, time):
+  """
+  This function takes individual features as input and performs prediction using your model.
+  Replace the placeholder logic with your actual prediction code using the provided features.
+  """
+  prediction = model.predict([[age, creatinine_phosphokinase, ejection_fraction, platelets,
+                               serum_creatinine, serum_sodium, anaemia, diabetes,
+                               high_blood_pressure, sex, smoking, time]])
+  print(prediction)
+  return prediction[0]  # Assuming the model returns a list or array, extract the first element (prediction)
+
+
 def main():
   # Create input fields for numerical features
   age = st.number_input("Age", min_value=0)
@@ -65,23 +70,23 @@ def main():
 
   # Encode categorical features
   encoded_data = encode_categorical(user_data)
+    # Extract individual features from encoded data (assuming one-hot encoded)
+  anaemia = encoded_data['anaemia'][0]  # Assuming the first element is encoded value (replace with appropriate indexing if different)
+   diabetes = encoded_data['diabetes'][0]
+high_blood_pressure = encoded_data['high_blood_pressure'][0]
+sex = encoded_data['sex'][0]
+smoking = encoded_data['smoking'][0]
+ 
 
-  predict = prediction(encoded_data)[0]
+  # Make prediction using the extracted features
+  prediction = prediction(age, creatinine_phosphokinase, ejection_fraction, platelets,
+                          serum_creatinine, serum_sodium, anaemia_selected, diabetes_selected,
+                          high_blood_pressure_selected, sex_selected, smoking_selected, time)
 
   # Display prediction results
   if st.button("Predict"):
-    st.write(f"Predicted Probability of Death Event: {predict:.2f}")  # Format prediction to 2 decimal places
+    st.write(f"Predicted Probability of Death Event: {prediction:.2f}")  # Format prediction to 2 decimal places
 
 
 if __name__ == '__main__':
   main()
-
-# Call your machine learning model prediction function here (replace with your actual logic)
-# This example assumes a function named 'predict' that takes encoded data as input
-# and returns a prediction (e.g., probability of death event)
-#predict= prediction(encoded_data)
-#prediction = round(model.predict(features)[0],0)
-
-# Display prediction results
-#if st.button("Predict"):
-#  st.write(f"Predicted Probability of Death Event: {predict:.2f}")  # Format prediction to 2 decimal places
