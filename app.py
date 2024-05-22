@@ -69,7 +69,7 @@ def main():
   # Call your machine learning model prediction function here (replace with your actual logic)
   # This example assumes a function named 'predict' that takes encoded data as input
   # and returns a prediction (e.g., probability of death event)
-  prediction = predict(encoded_data)
+  prediction = prediction(encoded_data)
 
   # Display prediction results
   if st.button("Predict"):
