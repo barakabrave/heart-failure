@@ -50,7 +50,7 @@ def main():
     # Convert user data to dataframe (if needed for your model)
     import pandas as pd
     input_df = pd.DataFrame([user_data])
-    pickle_in = open('model.pkl', 'rb')
+    pickle_in = open('heart_failure_model.pkl', 'rb')
     model = pickle.load(pickle_in)
     
     # Display the user input
