@@ -58,15 +58,16 @@ user_data = {
 
 # Encode categorical features
 encoded_data = encode_categorical(user_data)
-def predict( age,anaemia, creatinine_phosphokinase,diabetes,ejection_fraction, high_blood_pressure, platelets,serum_creatinine,serum_sodium,sex,smoking,time):  
-    predict=model.predict([[age,anaemia, creatinine_phosphokinase,diabetes,ejection_fraction, high_blood_pressure, platelets,serum_creatinine,serum_sodium,sex,smoking,time]])
-    print(predict)
-    return predict
+def prediction( age,anaemia, creatinine_phosphokinase,diabetes,ejection_fraction, high_blood_pressure, platelets,serum_creatinine,serum_sodium,sex,smoking,time):  
+    prediction=model.predict([[age,anaemia, creatinine_phosphokinase,diabetes,ejection_fraction, high_blood_pressure, platelets,serum_creatinine,serum_sodium,sex,smoking,time]])
+    print(prediction)
+    return prediction
 
 # Call your machine learning model prediction function here (replace with your actual logic)
 # This example assumes a function named 'predict' that takes encoded data as input
 # and returns a prediction (e.g., probability of death event)
-prediction = predict(encoded_data)
+prediction = model.predict(encoded_data)
+#prediction = round(model.predict(features)[0],0)
 
 # Display prediction results
 if st.button("Predict"):
