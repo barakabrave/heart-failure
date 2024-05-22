@@ -9,6 +9,7 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="auto",
 )
+st.write("Created by Brave")
 
 # Define function to take user inputs
 def user_input():
