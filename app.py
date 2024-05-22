@@ -70,7 +70,7 @@ def main():
     features=pd.DataFrame(user_data,index=[0])
     result =""
     
-    prediction = round(model.predict(features)[0],0)
+    prediction = prediction(features)[0]
     st.write(f"Predicted Probability of Death Event: {predict:.2f}")  # Format prediction to 2 decimal places
  
       
